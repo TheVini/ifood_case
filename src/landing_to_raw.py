@@ -47,27 +47,48 @@ now = datetime.now(tz=pytz.timezone("America/Sao_Paulo")).date()
 
 # MAGIC %sql
 # MAGIC CREATE TABLE IF NOT EXISTS IDENTIFIER(:catalogo || '.' || :schema || '.' || :table) (
-# MAGIC   VendorID BIGINT,
-# MAGIC   tpep_pickup_datetime TIMESTAMP,
-# MAGIC   tpep_dropoff_datetime TIMESTAMP,
-# MAGIC   passenger_count DOUBLE,
-# MAGIC   trip_distance DOUBLE,
-# MAGIC   RatecodeID DOUBLE,
-# MAGIC   store_and_fwd_flag STRING,
-# MAGIC   PULocationID BIGINT,
-# MAGIC   DOLocationID BIGINT,
-# MAGIC   payment_type BIGINT,
-# MAGIC   fare_amount DOUBLE,
-# MAGIC   extra DOUBLE,
-# MAGIC   mta_tax DOUBLE,
-# MAGIC   tip_amount DOUBLE,
-# MAGIC   tolls_amount DOUBLE,
-# MAGIC   improvement_surcharge DOUBLE,
-# MAGIC   total_amount DOUBLE,
-# MAGIC   congestion_surcharge DOUBLE,
-# MAGIC   airport_fee DOUBLE,
-# MAGIC   date_reference DATE,
-# MAGIC   insertion_date DATE
+# MAGIC   VendorID BIGINT 
+# MAGIC     COMMENT 'Código indicando o provedor TPEP que forneceu o registro. 1=Creative Mobile Technologies LLC, 2=Curb Mobility LLC, 6=Myle Technologies Inc, 7=Helix',
+# MAGIC   tpep_pickup_datetime TIMESTAMP 
+# MAGIC     COMMENT 'Data e hora em que o taxímetro foi acionado',
+# MAGIC   tpep_dropoff_datetime TIMESTAMP 
+# MAGIC     COMMENT 'Data e hora em que o taxímetro foi desligado',
+# MAGIC   passenger_count DOUBLE 
+# MAGIC     COMMENT 'Número de passageiros no veículo (informado pelo motorista)',
+# MAGIC   trip_distance DOUBLE 
+# MAGIC     COMMENT 'Distância percorrida em milhas reportada pelo taxímetro',
+# MAGIC   RatecodeID DOUBLE 
+# MAGIC     COMMENT 'Código de tarifa final em vigor no fim da corrida. 1=Standard rate, 2=JFK, 3=Newark, 4=Nassau or Westchester, 5=Negotiated fare, 6=Group ride, 99=Null/unknown',
+# MAGIC   store_and_fwd_flag STRING 
+# MAGIC     COMMENT 'Flag indicando se o registro foi armazenado na memória do veículo antes de enviar ao vendor. Y=store and forward trip, N=not a store and forward trip',
+# MAGIC   PULocationID BIGINT 
+# MAGIC     COMMENT 'TLC Taxi Zone onde o taxímetro foi acionado (pickup location)',
+# MAGIC   DOLocationID BIGINT 
+# MAGIC     COMMENT 'TLC Taxi Zone onde o taxímetro foi desligado (dropoff location)',
+# MAGIC   payment_type BIGINT 
+# MAGIC     COMMENT 'Código numérico indicando como o passageiro pagou. 0=Flex Fare trip, 1=Credit card, 2=Cash, 3=No charge, 4=Dispute, 5=Unknown, 6=Voided trip',
+# MAGIC   fare_amount DOUBLE 
+# MAGIC     COMMENT 'Tarifa tempo-distância calculada pelo taxímetro. Ver https://www.nyc.gov/site/tlc/passengers/taxi-fare.page',
+# MAGIC   extra DOUBLE 
+# MAGIC     COMMENT 'Extras e sobretaxas diversos (ex: rush hour, overnight charges)',
+# MAGIC   mta_tax DOUBLE 
+# MAGIC     COMMENT 'Imposto MTA acionado automaticamente com base na tarifa em uso ($0.50)',
+# MAGIC   tip_amount DOUBLE 
+# MAGIC     COMMENT 'Valor da gorjeta. Campo populado automaticamente para gorjetas em cartão de crédito. Gorjetas em dinheiro NÃO são incluídas',
+# MAGIC   tolls_amount DOUBLE 
+# MAGIC     COMMENT 'Valor total de pedágios pagos na corrida',
+# MAGIC   improvement_surcharge DOUBLE 
+# MAGIC     COMMENT 'Sobretaxa de melhoria avaliada na bandeirada. Começou a ser cobrada em 2015 ($0.30)',
+# MAGIC   total_amount DOUBLE 
+# MAGIC     COMMENT 'Valor total cobrado dos passageiros. NÃO inclui gorjetas em dinheiro',
+# MAGIC   congestion_surcharge DOUBLE 
+# MAGIC     COMMENT 'Valor total coletado na corrida para sobretaxa de congestionamento do Estado de NY',
+# MAGIC   airport_fee DOUBLE 
+# MAGIC     COMMENT 'Taxa cobrada apenas para pickups nos aeroportos LaGuardia e JFK ($1.25)',
+# MAGIC   date_reference DATE 
+# MAGIC     COMMENT 'Data de referência do mês dos dados (formato YYYY-MM-01) - campo técnico para particionamento',
+# MAGIC   insertion_date DATE 
+# MAGIC     COMMENT 'Data de inserção dos dados na tabela - campo técnico para auditoria'
 # MAGIC )
 # MAGIC COMMENT 'Tabela com os dados brutos de TAXI de NY.'
 # MAGIC CLUSTER BY (date_reference, VendorID)
