@@ -6,7 +6,7 @@ Este módulo é responsável por fazer o download dos arquivos Parquet de corrid
 de táxi de NY (NYC TLC Trip Record Data) e armazená-los na Landing Zone do Data Lake.
 
 Autor: Vinicius
-Data: 2024
+Data: 2025
 """
 
 # COMMAND ----------

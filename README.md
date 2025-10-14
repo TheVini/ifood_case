@@ -112,7 +112,7 @@ A solução foi construída seguindo o padrão de arquitetura medalhão com uma 
                                                   │ query via SQL
                                                   │
                                     ┌─────────────▼───────────────┐
-                                    │  👥 Data Consumers          │
+                                    │  👥 Data Consumers         │
                                     ├─────────────────────────────┤
                                     │ • Analysts (SQL queries)    │
                                     │ • Data Scientists (PySpark) │
@@ -120,11 +120,11 @@ A solução foi construída seguindo o padrão de arquitetura medalhão com uma 
                                     │ • ML Models (feature eng)   │
                                     └─────────────────────────────┘
 
-╔═══════════════════════════════════════════════════════════════════════════════════════════════╗
-║  📅 Schedule: Manual ou Cron                                                                  ║
-║  🖥️  Cluster: ifood-pipeline (Single Node, Databricks Runtime 13.3 LTS)                      ║
-║  ⏱️  Total Duration: ~9 minutes (5min download + 3min transform + 1min merge)                 ║
-╚═══════════════════════════════════════════════════════════════════════════════════════════════╝
+📅 Schedule: Manual ou Cron
+
+🖥️  Cluster: Serverless
+
+⏱️  Total Duration: ~3 minutes (for 5 days)
 
 ## 🛠️ Tecnologias Utilizadas
 
