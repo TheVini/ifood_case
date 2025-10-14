@@ -1,1 +1,42 @@
-loguru
+# ============================================================================
+# Dependências Python - iFood Data Architecture Case
+# ============================================================================
+#
+# Instalação:
+#   pip install -r requirements.txt
+#
+# OU dentro de notebooks Databricks:
+#   %pip install -r requirements.txt
+#
+# Notas:
+#   - PySpark já está disponível no ambiente Databricks
+#   - Delta Lake já está configurado no Databricks
+#   - Versões fixadas para garantir reprodutibilidade
+# ============================================================================
+
+# Logging estruturado e colorido
+loguru==0.7.2
+
+# Cliente AWS para interação com S3
+boto3==1.34.0
+botocore==1.34.0
+
+# Manipulação de datas
+python-dateutil==2.8.2
+
+# Requisições HTTP para download de arquivos
+requests==2.31.0
+
+# Timezones
+pytz==2023.3
+
+# ============================================================================
+# Dependências já disponíveis no Databricks Runtime (não requer instalação)
+# ============================================================================
+#
+# pyspark>=3.4.0          # Framework de processamento distribuído
+# delta-spark>=2.4.0      # Delta Lake para Data Lakes ACID
+# pandas>=1.5.3           # Manipulação de dados (se necessário)
+# numpy>=1.24.3           # Computação numérica (se necessário)
+#
+# ============================================================================
