@@ -91,6 +91,7 @@ USING (
       total_amount::DOUBLE
     FROM `ifood_catalog`.raw_layer.tb_taxi_data_api
     WHERE date_reference >= concat(:start_date, '-01') and date_reference <= concat(:end_date, '-01')
+    AND insertion_date = (SELECT max(insertion_date) FROM `ifood_catalog`.raw_layer.tb_taxi_data_api)
   )
   SELECT * FROM raw_data
 ) AS tb_taxi_data_for_analysis_tmp
