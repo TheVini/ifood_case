@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS IDENTIFIER(:catalogo || '.' || :schema || '.' || :tab
   vendor_id BIGINT COMMENT 'Identificador do fornecedor de táxi (1 = Creative Mobile Technologies, 2 = VeriFone Inc)',
   tpep_pickup_datetime TIMESTAMP COMMENT 'Data e hora em que o taxímetro foi acionado',
   tpep_dropoff_datetime TIMESTAMP COMMENT 'Data e hora em que o taxímetro foi desligado',
-  passenger_count DOUBLE COMMENT 'Número de passageiros no veículo (valor informado pelo motorista)',
+  passenger_count INTEGER COMMENT 'Número de passageiros no veículo (valor informado pelo motorista)',
   total_amount DOUBLE COMMENT 'Valor total cobrado dos passageiros (não inclui gorjetas em dinheiro)'
 )
 COMMENT 'Tabela trusted contendo dados refinados de corridas de táxi de NY para análise'
@@ -67,14 +67,9 @@ LOCATION 's3://datalake-ifood/trusted_layer/tb_taxi_data_for_analysis';
 -- MAGIC    - **WHEN NOT MATCHED BY SOURCE**: Remove registros que não existem mais na origem
 -- MAGIC    - **WHEN MATCHED**: NÃO atualiza devido à anomalia nos dados (ver observações)
 -- MAGIC
--- MAGIC ### Chave de Merge (Composite Key)
--- MAGIC A combinação de **vendor_id + tpep_pickup_datetime + tpep_dropoff_datetime**
--- MAGIC identifica unicamente uma corrida, mas há casos excepcionais de duplicatas
--- MAGIC com valores opostos.
--- MAGIC
--- MAGIC ### Anomalia Detectada
+-- MAGIC ### Possível Anomalia Detectada
 -- MAGIC Existem registros com mesma chave composta mas valores diferentes em passenger_count
--- MAGIC e total_amount (valores exatamente opostos). Exemplo:
+-- MAGIC e total_amount (valores exatamente opostos), possivelmente a viagem foi cancelada. Exemplo:
 -- MAGIC ```
 -- MAGIC VendorID=2, pickup='2023-01-08 01:00:50', dropoff='2023-01-08 01:10:47'
 -- MAGIC → Registro A: passenger_count=1, total_amount=15.50
@@ -89,11 +84,11 @@ USING (
   WITH raw_data as (
     SELECT 
       DISTINCT
-      VendorID as vendor_id,
-      tpep_pickup_datetime,
-      tpep_dropoff_datetime,
-      passenger_count,
-      total_amount
+      VendorID::INTEGER as vendor_id,
+      tpep_pickup_datetime::TIMESTAMP,
+      tpep_dropoff_datetime::TIMESTAMP,
+      passenger_count::INTEGER,
+      total_amount::DOUBLE
       FROM `ifood_catalog`.raw_layer.tb_taxi_data_api
   )
   SELECT * FROM raw_data
@@ -104,8 +99,4 @@ AND tb_taxi_data_for_analysis.tpep_dropoff_datetime = tb_taxi_data_for_analysis_
 WHEN NOT MATCHED
     THEN INSERT *
 WHEN NOT MATCHED BY SOURCE THEN DELETE
-
-
--- COMMAND ----------
-
 
