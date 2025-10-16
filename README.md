@@ -202,7 +202,7 @@ A solução foi construída seguindo o padrão de arquitetura medalhão com uma 
 
 🖥️  Cluster: Serverless
 
-⏱️  Total Duration: ~3 minutes (for 5 days)
+⏱️  Total Duration: ~5 minutes (for 5 days)
 
 ## 🛠️ Tecnologias Utilizadas
 
