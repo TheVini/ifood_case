@@ -1,4 +1,4 @@
-# Case Técnico Data Architect - iFood
+# Case Técnico Data Engineering - iFood
 
 ## 📋 Sobre o Projeto
 
