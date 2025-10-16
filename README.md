@@ -114,10 +114,10 @@ A solução foi construída seguindo o padrão de arquitetura medalhão com uma 
     │             │        │ ASSERT validations     │       │              │ │
     │             │        │ (threshold checks)     │       │              │ │
     │             │        └────────────────────────┘       │              │ │
-    │             │                     │                   │              │ │
-    │             │                     │ ✅ PASS           │              │ │
-    │             │                     │                   │              │ │
-    │  STEP 3:    │                     ▼                   │  STEP 4:     │ │
+    │             │                                         │              │ │
+    │             │                                         │              │ │
+    │             │                                         │              │ │
+    │  STEP 3:    │                                         │  STEP 4:     │ │
     │  INSERT     │                                         │  INSERT      │ │
     │             │                                         │              │ │
     │             ▼                                         ▼              │ │
