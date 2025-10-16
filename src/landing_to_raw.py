@@ -578,7 +578,7 @@ def process_month_data(
             to_date(lit(date_reference), "yyyy-MM-dd")
         ).withColumn(
             "insertion_date",
-            to_date(lit(date_reference), "yyyy-MM-dd")
+            lit(now)
         )
         
         # Tratamento e validação
