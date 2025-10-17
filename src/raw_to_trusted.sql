@@ -499,7 +499,7 @@ SELECT
   -- Vendor ID deve ser positivo
   CASE 
     WHEN TRY_CAST(vendor_id AS INTEGER) IS NOT NULL 
-      AND (TRY_CAST(vendor_id AS INTEGER) < 1)
+      AND (TRY_CAST(vendor_id AS INTEGER) < 0)
     THEN 1 
     ELSE 0 
   END AS falha_vendor_id_invalido,
@@ -507,7 +507,7 @@ SELECT
   -- Passenger count deve ser positivo
   CASE 
     WHEN TRY_CAST(passenger_count AS INTEGER) IS NOT NULL 
-      AND (TRY_CAST(passenger_count AS INTEGER) < 1)
+      AND (TRY_CAST(passenger_count AS INTEGER) < 0)
     THEN 1 
     ELSE 0 
   END AS falha_passenger_count_invalido,
