@@ -724,7 +724,7 @@ SELECT ASSERT_TRUE(
     ' registros com erro (',
     (SELECT percentual_erro FROM vw_metricas_qualidade),
     '% > ',
-    2.0,
+    5.0,
     '% permitido)'
   )
 ) as validacao_geral;
